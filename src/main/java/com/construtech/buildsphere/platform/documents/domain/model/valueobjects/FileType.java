@@ -1,7 +1,6 @@
 package com.construtech.buildsphere.platform.documents.domain.model.valueobjects;
 
 import jakarta.persistence.Embeddable;
-import java.util.Objects;
 
 @Embeddable
 public record FileType(FileTypeEnum fileType) {

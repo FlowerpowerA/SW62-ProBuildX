@@ -38,13 +38,4 @@ public class Document extends AuditableAbstractAggregateRoot<Document> {
         this.description = Description;
         this.fileType = FileType;
     }
-    /**
-     * Update the document information
-     * @param Name The name of the document
-     * @param Description The description of the document
-     */
-    public void updateDocument(String Name, String Description) {
-        this.name = Name;
-        this.description = Description;
-    }
 }

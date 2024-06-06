@@ -1,12 +1,9 @@
 package com.construtech.buildsphere.platform.operationsManagement.domain.model.aggregates;
 
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.commands.CreateTeamCommand;
-import com.construtech.buildsphere.platform.operationsManagement.domain.model.valueobjects.ProjectId;
+import com.construtech.buildsphere.platform.operationsManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
@@ -14,33 +11,32 @@ import org.apache.logging.log4j.util.Strings;
 @Entity
 public class Team extends AuditableAbstractAggregateRoot<Team> {
 
-    @Embedded
+    @Column
     private String teamName;
-    @Embedded
+
+    @Column
     private String description;
 
-
     @Embedded
-    @JoinColumn(name = "project_id")
-    private ProjectId projectId;
+    private Project project;
 
     public Team(){
         this.teamName = Strings.EMPTY;
         this.description = Strings.EMPTY;
-        this.projectId = new ProjectId(0);
+        this.project = new Project(0);
     }
 
-    public Team(String teamName, String description, int projectId){
+    public Team(String teamName, String description, int project){
         this();
         this.teamName = teamName;
         this.description = description;
-        this.projectId = new ProjectId(projectId);
+        this.project = new Project(project);
     }
 
     public Team(CreateTeamCommand command){
         this.teamName = command.teamName();
         this.description = command.description();
-        this.projectId = new ProjectId(command.projectId());
+        this.project = new Project(command.project());
     }
     public Team updateInformation(String teamName, String description){
         this.teamName = teamName;
@@ -49,6 +45,6 @@ public class Team extends AuditableAbstractAggregateRoot<Team> {
     }
 
     public int getProjectId(){
-        return projectId.id();
+        return project.projectEnt();
     }
 }

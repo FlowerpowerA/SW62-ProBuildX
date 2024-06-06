@@ -4,7 +4,7 @@ import com.construtech.buildsphere.platform.operationsManagement.domain.model.ag
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.commands.CreateTeamCommand;
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.commands.DeleteTeamCommand;
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.commands.UpdateTeamCommand;
-import com.construtech.buildsphere.platform.operationsManagement.domain.model.valueobjects.ProjectId;
+import com.construtech.buildsphere.platform.operationsManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.operationsManagement.domain.services.TeamCommandService;
 import com.construtech.buildsphere.platform.operationsManagement.infrastructure.persistence.jpa.repositories.TeamRepository;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,8 @@ public class TeamCommandServiceImpl implements TeamCommandService {
 
     @Override
     public Long handle(CreateTeamCommand command){
-        var projectId = new ProjectId(command.projectId());
-        if (teamRepository.existsByTeamNameAndProjectId(command.teamName(), projectId)){
+        var projectId = new Project(command.project());
+        if (teamRepository.existsByTeamNameAndProject(command.teamName(), projectId)){
             throw new IllegalArgumentException("Team with the same name already exists in the project");
         }
         var team = new Team(command);

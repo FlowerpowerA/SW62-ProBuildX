@@ -25,7 +25,7 @@ public class TeamQueryServiceImpl implements TeamQueryService {
 
     @Override
     public List<Team> handle(GetAllTeamsByProjectIdQuery query) {
-        return teamRepository.findAllByProjectId(query.projectId());
+        return teamRepository.findAllByProject(query.project());
     }
 
 

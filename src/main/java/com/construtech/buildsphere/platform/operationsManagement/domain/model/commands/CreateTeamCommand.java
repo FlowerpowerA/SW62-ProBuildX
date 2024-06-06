@@ -1,4 +1,4 @@
 package com.construtech.buildsphere.platform.operationsManagement.domain.model.commands;
 
-public record CreateTeamCommand(String teamName, String description, int projectId) {
+public record CreateTeamCommand(String teamName, String description, int project) {
 }

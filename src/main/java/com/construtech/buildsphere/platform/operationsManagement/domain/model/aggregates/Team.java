@@ -3,16 +3,24 @@ package com.construtech.buildsphere.platform.operationsManagement.domain.model.a
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.commands.CreateTeamCommand;
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.valueobjects.ProjectId;
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
+@Getter
+@Entity
 public class Team extends AuditableAbstractAggregateRoot<Team> {
 
-
+    @Embedded
     private String teamName;
+    @Embedded
     private String description;
-    @ManyToOne
+
+
+    @Embedded
     @JoinColumn(name = "project_id")
     private ProjectId projectId;
 
@@ -40,4 +48,7 @@ public class Team extends AuditableAbstractAggregateRoot<Team> {
         return this;
     }
 
+    public int getProjectId(){
+        return projectId.id();
+    }
 }

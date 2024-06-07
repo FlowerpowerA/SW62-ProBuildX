@@ -18,7 +18,7 @@ public class OpenApiConfiguration {
                         .version("1.0.0")
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()
-                        .description("BuildSphere Wiki Documentation")
+                        .description("BuildSphere Documentation")
                         .url("https://docs.buildsphere.com"));
         return openApi;
     }

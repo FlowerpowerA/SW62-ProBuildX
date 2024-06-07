@@ -1,5 +1,6 @@
 package com.construtech.buildsphere.platform.operationsManagement.domain.model.aggregates;
 
+import com.construtech.buildsphere.platform.operationsManagement.domain.model.commands.CreateWorkerCommand;
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
@@ -21,9 +22,8 @@ public class Worker extends AuditableAbstractAggregateRoot<Worker> {
     @Column
     private int hoursWorked;
 
-    @ManyToOne
-    @JoinColumn(name = "team_id") // Nombre de la columna en la tabla
-    private Team team; // Relación con la entidad Team
+    @Column
+    private Long team;//Foreign key
 
 
     public Worker() {
@@ -33,13 +33,33 @@ public class Worker extends AuditableAbstractAggregateRoot<Worker> {
         this.hoursWorked = 0;
     }
 
-    public Worker(int project, String fullName, String role, int hoursWorked, Team team){
+    public Worker(int project, String fullName, String role, int hoursWorked, Long team){
         this();
         this.project = new Project(project);
         this.fullName = fullName;
         this.role = role;
         this.hoursWorked = hoursWorked;
         this.team = team;
+    }
+
+    public Worker(CreateWorkerCommand command){
+        this.fullName = command.fullName();
+        this.role = command.role();
+        this.hoursWorked = command.hoursWorked();
+        this.project = new Project(command.project());
+        this.team = command.teamId();
+    }
+
+    public Worker updateInformation(String fullName, String role, int hoursWorked, Long team){
+        this.fullName = fullName;
+        this.role = role;
+        this.hoursWorked = hoursWorked;
+        this.team = team;
+        return this;
+    }
+
+    public int getProjectId(){
+        return project.projectEnt();
     }
 
 }

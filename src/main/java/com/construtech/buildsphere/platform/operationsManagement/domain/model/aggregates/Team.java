@@ -38,6 +38,7 @@ public class Team extends AuditableAbstractAggregateRoot<Team> {
         this.description = command.description();
         this.project = new Project(command.project());
     }
+
     public Team updateInformation(String teamName, String description){
         this.teamName = teamName;
         this.description = description;

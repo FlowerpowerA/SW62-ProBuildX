@@ -37,7 +37,7 @@ public class TeamCommandServiceImpl implements TeamCommandService {
     @Override
     public Optional<Team> handle(UpdateTeamCommand command){
         if (teamRepository.existsByTeamNameAndIdIsNot(command.teamName(), command.id())){
-            throw new IllegalArgumentException("Product with same team name already exists");
+            throw new IllegalArgumentException("Team with same team name already exists");
         }
         var result = teamRepository.findById(command.id());
         if (result.isEmpty()) {

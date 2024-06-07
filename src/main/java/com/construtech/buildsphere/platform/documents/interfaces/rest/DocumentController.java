@@ -1,4 +1,4 @@
-package com.construtech.buildsphere.platform.documents.interfaces.rest.transform;
+package com.construtech.buildsphere.platform.documents.interfaces.rest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

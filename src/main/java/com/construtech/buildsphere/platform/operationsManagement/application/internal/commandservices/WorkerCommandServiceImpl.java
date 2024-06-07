@@ -52,6 +52,7 @@ public class WorkerCommandServiceImpl implements WorkerCommandService {
         }
     }
 
+    @Override
     public void handle(DeleteWorkerCommand command){
         if(!workerRepository.existsById(command.workerId())){
             throw new IllegalArgumentException("Worker does not exist");

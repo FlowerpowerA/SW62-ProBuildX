@@ -49,6 +49,9 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.materialName = Strings.EMPTY;
         this.description = Strings.EMPTY;
         this.status = MaterialStatus.EMPTY;
+        this.receptionDate = LocalDate.now();
+        this.amount = 0;
+        this.totalCost = 0.0;
     }
 
     public Material(ProjectId projectId, String materialName, String description, LocalDate receptionDate, int amount, double totalCost, MaterialStatus status) {

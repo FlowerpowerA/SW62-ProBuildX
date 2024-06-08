@@ -3,5 +3,6 @@ package com.construtech.buildsphere.platform.resourceManagement.domain.model.val
 public enum MaterialStatus {
     NEW,
     HALF_USED,
-    USED
+    USED,
+    EMPTY
 }

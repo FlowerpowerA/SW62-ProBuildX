@@ -9,4 +9,8 @@ public record ProjectId(Long projectId) {
             throw new IllegalArgumentException("ProjectId cannot be null ");
         }
     }
+
+    public ProjectId() {
+        this(0L);
+    }
 }

@@ -1,6 +1,6 @@
 package com.construtech.buildsphere.platform.resourceManagement.domain.model.commands;
 
-public record CreateMaterialCommand(String materialName, String materialDescription, String receptionDate,
+public record CreateMaterialCommand(String materialName, String description, String receptionDate,
                                     int amount, double totalCost, String status, Long projectId) {
     public CreateMaterialCommand {
         if (projectId <= 0) {
@@ -11,7 +11,7 @@ public record CreateMaterialCommand(String materialName, String materialDescript
             throw new IllegalArgumentException("Material name cannot be null or empty");
         }
 
-        if (materialDescription == null || materialDescription.isBlank()) {
+        if (description == null || description.isBlank()) {
             throw new IllegalArgumentException("Material description cannot be null or empty");
         }
 

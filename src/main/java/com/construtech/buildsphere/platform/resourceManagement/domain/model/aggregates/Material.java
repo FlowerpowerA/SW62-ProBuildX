@@ -67,7 +67,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
 
     public Material(CreateMaterialCommand command) {
         this.materialName = command.materialName();
-        this.description = command.materialDescription();
+        this.description = command.description();
         this.receptionDate = LocalDate.parse(command.receptionDate());
         this.amount = command.amount();
         this.totalCost = command.totalCost();

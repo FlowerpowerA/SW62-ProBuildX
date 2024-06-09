@@ -76,7 +76,7 @@ public class MaterialController {
         if (updateMaterial.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
-        var materialResource = MaterialResourceFromEntityAssembler.toResourceFromEntity(updateMaterial.get());.
+        var materialResource = MaterialResourceFromEntityAssembler.toResourceFromEntity(updateMaterial.get());
         return ResponseEntity.ok(materialResource);
     }
 

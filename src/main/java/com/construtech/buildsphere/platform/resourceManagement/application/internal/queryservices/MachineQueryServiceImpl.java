@@ -18,7 +18,7 @@ public class MachineQueryServiceImpl implements MachineQueryService {
 
     @Override
     public Optional<Machine> handle(GetMachineByIdQuery query) {
-        return machineRepository.findByMachineId(query.machineId());
+        return machineRepository.findById(query.machineId());
     }
 
     @Override

@@ -16,13 +16,13 @@ public class OpenApiConfiguration {
         openApi
                 .info(new Info()
                         .title("Construtech Buildsphere Platform API")
-                        .description("ACME Learning Platform application REST API documentation.")
+                        .description("Construtech Buildsphere Platform application REST API documentation.")
                         .version("v1.0.0")
                         .license(new License().name("Apache 2.0")
                                 .url("https://www.apache.org/licenses/LICENSE-2.0.html")))
                 .externalDocs(new ExternalDocumentation()
-                        .description("ACME Learning Platform Wiki Documentation")
-                        .url("https://acme-learning-platform.wiki.github.io/docs"));
+                        .description("Construtech Buildsphere Platform Wiki Documentation")
+                        .url("https://construtech-buildsphere-platform.wiki.github.io/docs"));
         return openApi;
     }
 }

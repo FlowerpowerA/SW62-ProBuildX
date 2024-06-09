@@ -2,5 +2,5 @@ package com.construtech.buildsphere.platform.resourceManagement.domain.model.que
 
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
 
-public record GetAllMaterialsByProjectIdQuery(Project projectId) {
+public record GetAllMaterialsByProjectIdQuery(Project project) {
 }

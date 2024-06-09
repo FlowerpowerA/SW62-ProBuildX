@@ -9,6 +9,6 @@ public record MachineResource(
         LocalDate receptionDate,
         LocalDate endDate,
         double totalCost,
-        Long projectId
+        int projectId
 ) {
 }

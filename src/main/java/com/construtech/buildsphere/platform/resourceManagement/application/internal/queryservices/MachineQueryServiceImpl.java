@@ -5,10 +5,12 @@ import com.construtech.buildsphere.platform.resourceManagement.domain.model.quer
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.queries.GetMachineByIdQuery;
 import com.construtech.buildsphere.platform.resourceManagement.domain.services.MachineQueryService;
 import com.construtech.buildsphere.platform.resourceManagement.infrastructure.persistence.jpa.repositories.MachineRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MachineQueryServiceImpl implements MachineQueryService {
     private final MachineRepository machineRepository;
 
@@ -23,6 +25,6 @@ public class MachineQueryServiceImpl implements MachineQueryService {
 
     @Override
     public List<Machine> handle(GetAllMachinesByProjectIdQuery query) {
-        return machineRepository.findAllByProjectId(query.projectId());
+        return machineRepository.findAllByProject(query.project());
     }
 }

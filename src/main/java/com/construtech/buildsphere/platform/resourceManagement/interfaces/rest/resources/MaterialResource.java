@@ -9,7 +9,7 @@ public record MaterialResource(
         LocalDate receptionDate,
         int amount,
         double totalCost,
-        com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.MaterialStatus status,
-        Long projectId
+        String status,
+        int projectId
 ) {
 }

@@ -25,6 +25,6 @@ public class MaterialQueryServiceImpl implements MaterialQueryService {
 
     @Override
     public List<Material> handle(GetAllMaterialsByProjectIdQuery query) {
-        return materialRepository.findAllByProjectId(query.projectId());
+        return materialRepository.findAllByProject(query.project());
     }
 }

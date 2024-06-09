@@ -4,12 +4,11 @@ import com.construtech.buildsphere.platform.resourceManagement.domain.model.aggr
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.CreateMachineCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.DeleteMachineCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.UpdateMachineCommand;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.ProjectId;
+import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.resourceManagement.domain.services.MachineCommandService;
 import com.construtech.buildsphere.platform.resourceManagement.infrastructure.persistence.jpa.repositories.MachineRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -23,8 +22,8 @@ public class MachineCommandServiceImpl implements MachineCommandService {
 
     @Override
     public Long handle(CreateMachineCommand command) {
-        var projectId = new ProjectId(command.projectId());
-        if (machineRepository.existsByMachineNameAndProjectId(command.machineName(), projectId)) {
+        var projectId = new Project(command.project());
+        if (machineRepository.existsByMachineNameAndProject(command.machineName(), projectId)) {
             throw new IllegalArgumentException("Machine with the same name is already exists in the project");
         }
         var machine = new Machine(command);
@@ -38,7 +37,7 @@ public class MachineCommandServiceImpl implements MachineCommandService {
 
     @Override
     public Optional<Machine> handle(UpdateMachineCommand command) {
-        if (machineRepository.existsByMachineNameAndProjectIdNot(command.machineName(), command.id())) {
+        if (machineRepository.existsByMachineNameAndIdIsNot(command.machineName(), command.id())) {
             throw new IllegalArgumentException("Machine with the same name already exists in the project");
         }
 
@@ -51,7 +50,7 @@ public class MachineCommandServiceImpl implements MachineCommandService {
 
         try {
             var updatedMachine = machineRepository.save(machineToUpdate.updateMachine(command.machineName()
-                    , command.description(), LocalDate.parse(command.endDate()), command.totalCost()));
+                    , command.description(), command.endDate(), command.totalCost()));
             return Optional.of(updatedMachine);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while updating machine: " + e.getMessage());

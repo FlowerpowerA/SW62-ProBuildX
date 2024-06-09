@@ -5,7 +5,6 @@ import com.construtech.buildsphere.platform.resourceManagement.domain.model.valu
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.apache.logging.log4j.util.Strings;
 
 import java.time.LocalDate;
 
@@ -59,7 +58,7 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
         this.receptionDate = LocalDate.parse(command.receptionDate());
         this.endDate = LocalDate.parse(command.endDate());
         this.totalCost = command.totalCost();
-        this.project = new Project(command.projectId());
+        this.project = new Project(command.project());
     }
 
     public Machine updateMachine(String machineName, String description, String endDate, double totalCost) {

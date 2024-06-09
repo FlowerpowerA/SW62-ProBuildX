@@ -3,7 +3,7 @@ package com.construtech.buildsphere.platform.resourceManagement.interfaces.rest;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.DeleteMaterialCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.queries.GetAllMaterialsByProjectIdQuery;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.queries.GetMaterialByIdQuery;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.ProjectId;
+import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.resourceManagement.domain.services.MaterialCommandService;
 import com.construtech.buildsphere.platform.resourceManagement.domain.services.MaterialQueryService;
 import com.construtech.buildsphere.platform.resourceManagement.interfaces.rest.resources.CreateMaterialResource;
@@ -62,7 +62,7 @@ public class MaterialController {
 
     @GetMapping("/projectId/{projectId}")
     public ResponseEntity<List<MaterialResource>> getAllMaterialsByProjectId(@PathVariable Long projectId) {
-        var project = new ProjectId((long) Math.toIntExact(projectId));
+        var project = new Project((Math.toIntExact(projectId)));
         var getAllMaterialsByProjectIdQuery = new GetAllMaterialsByProjectIdQuery(project);
         var materials = materialQueryService.handle(getAllMaterialsByProjectIdQuery);
         var materialResources = materials.stream().map(MaterialResourceFromEntityAssembler::toResourceFromEntity).toList();

@@ -3,7 +3,7 @@ package com.construtech.buildsphere.platform.resourceManagement.interfaces.rest;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.DeleteMachineCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.queries.GetAllMachinesByProjectIdQuery;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.queries.GetMachineByIdQuery;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.ProjectId;
+import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.resourceManagement.domain.services.MachineCommandService;
 import com.construtech.buildsphere.platform.resourceManagement.domain.services.MachineQueryService;
 import com.construtech.buildsphere.platform.resourceManagement.interfaces.rest.resources.CreateMachineResource;
@@ -62,7 +62,7 @@ public class MachineController {
 
     @GetMapping("/projectId/{projectId}")
     public ResponseEntity<List<MachineResource>> getAllMachinesByProjectId(@PathVariable Long projectId) {
-        var project = new ProjectId((long) Math.toIntExact(projectId));
+        var project = new Project(Math.toIntExact(projectId));
         var getAllMachinesByProjectIdQuery = new GetAllMachinesByProjectIdQuery(project);
         var machines = machineQueryService.handle(getAllMachinesByProjectIdQuery);
         var machineResources = machines.stream().map(MachineResourceFromEntityAssembler::toResourceFromEntity).toList();

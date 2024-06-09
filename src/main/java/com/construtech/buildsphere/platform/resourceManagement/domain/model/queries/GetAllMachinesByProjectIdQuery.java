@@ -2,5 +2,5 @@ package com.construtech.buildsphere.platform.resourceManagement.domain.model.que
 
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
 
-public record GetAllMachinesByProjectIdQuery(Project projectId) {
+public record GetAllMachinesByProjectIdQuery(Project project) {
 }

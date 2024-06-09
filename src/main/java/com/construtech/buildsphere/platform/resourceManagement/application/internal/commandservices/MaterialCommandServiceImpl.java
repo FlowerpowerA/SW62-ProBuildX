@@ -4,8 +4,7 @@ import com.construtech.buildsphere.platform.resourceManagement.domain.model.aggr
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.CreateMaterialCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.DeleteMaterialCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.UpdateMaterialCommand;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.MaterialStatus;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.ProjectId;
+import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.resourceManagement.domain.services.MaterialCommandService;
 import com.construtech.buildsphere.platform.resourceManagement.infrastructure.persistence.jpa.repositories.MaterialRepository;
 import org.springframework.stereotype.Service;
@@ -23,9 +22,9 @@ public class MaterialCommandServiceImpl implements MaterialCommandService {
 
     @Override
     public Long handle(CreateMaterialCommand command) {
-        var projectId = new ProjectId(command.projectId());
+        var projectId = new Project(command.project());
 
-        if(materialRepository.existsByMaterialNameAndProjectId(command.materialName(), projectId)) {
+        if(materialRepository.existsByMaterialNameAndProject(command.materialName(), projectId)) {
             throw new IllegalArgumentException("Material with name " +
                     command.materialName() + " already exists in the project");
         }
@@ -43,7 +42,7 @@ public class MaterialCommandServiceImpl implements MaterialCommandService {
 
     @Override
     public Optional<Material> handle(UpdateMaterialCommand command) {
-        if (materialRepository.existsByMaterialNameAndProjectIdNot(command.materialName(), command.id())) {
+        if (materialRepository.existsByMaterialNameAndIdNot(command.materialName(), command.id())) {
             throw new IllegalArgumentException("Material with the same name already exists in the project");
         }
 
@@ -56,7 +55,7 @@ public class MaterialCommandServiceImpl implements MaterialCommandService {
 
         try {
             var updatedMaterial = materialRepository.save(materialToUpdate.updateMaterial(command.materialName()
-                    , command.description(), command.amount(), command.totalCost(), MaterialStatus.valueOf(command.status())));
+                    , command.description(), command.amount(), command.totalCost(), command.status()));
             return Optional.of(updatedMaterial);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while updating material: " + e.getMessage());

@@ -1,4 +1,6 @@
 package com.construtech.buildsphere.platform.documents.domain.model.queries;
 
-public class GetAllDocumentsByProjectIdQuery {
+import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.Project;
+
+public record GetAllDocumentsByProjectIdQuery(Project project) {
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface MaterialRepository extends JpaRepository<Material, Long> {
     boolean existsByMaterialIdAndProjectId(Long materialId, ProjectId projectId);
     boolean existsByMaterialNameAndProjectId(String materialName, ProjectId projectId);
-    boolean existsByMaterialNameAndProjectIdNot(String materialName, Long projectId);
+    boolean existsByMaterialNameAndProjectIdNot(String materialName, Long id);
     Optional<Material> findByMaterialId(Long materialId);
     Optional<Material> findByMaterialIdAndProjectId(Long materialId, ProjectId projectId);
     List<Material> findAllByProjectId(ProjectId projectId);

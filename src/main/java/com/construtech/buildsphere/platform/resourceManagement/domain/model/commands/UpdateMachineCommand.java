@@ -1,10 +1,10 @@
 package com.construtech.buildsphere.platform.resourceManagement.domain.model.commands;
 
-public record UpdateMachineCommand(Long projectId, String machineName, String description, String endDate,
+public record UpdateMachineCommand(Long id, String machineName, String description, String endDate,
                                    double totalCost, String status) {
     public UpdateMachineCommand {
-        if (projectId == null || projectId <= 0) {
-            throw new IllegalArgumentException("Project ID cannot be null");
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Id must be greater than 0");
         }
 
         if (machineName == null || machineName.isBlank()) {

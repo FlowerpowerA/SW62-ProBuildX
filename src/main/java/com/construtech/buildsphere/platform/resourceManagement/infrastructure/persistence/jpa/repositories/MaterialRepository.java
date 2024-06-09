@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MaterialRepository extends JpaRepository<Material, Long> {
-    boolean existsByMaterialIdAndProjectId(Long materialId, Long projectId);
-    boolean existsByMaterialNameAndProjectId(String materialName, Long projectId);
-    boolean existsByMaterialNameAndProjectIdNot(String materialName, Long projectId);
+public interface MaterialRepository extends JpaRepository<Material, ProjectId> {
+    boolean existsByMaterialIdAndProjectId(Long materialId, ProjectId projectId);
+    boolean existsByMaterialNameAndProjectId(String materialName, ProjectId projectId);
+    boolean existsByMaterialNameAndProjectIdNot(String materialName, ProjectId projectId);
     Optional<Material> findByMaterialId(Long materialId);
-    Optional<Material> findByMaterialIdAndProjectId(Long materialId, Long projectId);
+    Optional<Material> findByMaterialIdAndProjectId(Long materialId, ProjectId projectId);
     List<Material> findAllByProjectId(ProjectId projectId);
 }

@@ -1,41 +1,59 @@
 package com.construtech.buildsphere.platform.documents.domain.model.aggregates;
 
-import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.FileType;
-import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.FileTypeEnum;
-import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.ProjectId;
+import com.construtech.buildsphere.platform.documents.domain.model.commands.CreateDocumentCommand;
+import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
-import org.apache.logging.log4j.util.Strings;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class Document extends AuditableAbstractAggregateRoot<Document> {
-    /**
-    * The Project Id for this document
-    */
-    @Embedded
-    private ProjectId projectId;
 
+    @Embedded
+    private Project project;
+
+    @Column
     private String name;
 
+    @Column
     private String description;
 
-    @Embedded
-    private FileType fileType;
+    @Column
+    private String fileType;
 
-    private String url;
 
     public Document() {
-        this.projectId = new ProjectId();
-        this.name = Strings.EMPTY;
-        this.description = Strings.EMPTY;
-        this.fileType = new FileType(FileTypeEnum.valueOf("OTHER"));
-        this.url = Strings.EMPTY;
+        this.project = new Project(0);
+        this.name = "";
+        this.description = "";
+        this.fileType = "";
     }
 
-    public Document(String Name, String Description, FileType FileType) {
+    public Document(int project, String name, String description, String fileType){
         this();
-        this.name = Name;
-        this.description = Description;
-        this.fileType = FileType;
+        this.project = new Project(project);
+        this.name = name;
+        this.description = description;
+        this.fileType = fileType;
     }
+
+    public Document(CreateDocumentCommand command){
+        this.name = command.name();
+        this.description = command.description();
+        this.fileType = command.fileType();
+        this.project = new Project(command.project());
+    }
+
+    public Document updateInformation(String name, String description, String fileType){
+        this.name = name;
+        this.description = description;
+        this.fileType = fileType;
+        return this;
+    }
+
+    public int getProjectId(){
+        return project.projectEnt();
+    }
+
 }

@@ -1,8 +1,11 @@
 package com.construtech.buildsphere.platform.resourceManagement.domain.model.commands;
 
-public record UpdateMaterialCommand(String materialName, String description, int amount, double totalCost,
+public record UpdateMaterialCommand(Long projectId, String materialName, String description, int amount, double totalCost,
                                     String status) {
     public UpdateMaterialCommand {
+        if (projectId == null || projectId <= 0) {
+            throw new IllegalArgumentException("Project ID cannot be null");
+        }
 
         if (materialName == null || materialName.isBlank()) {
             throw new IllegalArgumentException("Material name cannot be null or empty");

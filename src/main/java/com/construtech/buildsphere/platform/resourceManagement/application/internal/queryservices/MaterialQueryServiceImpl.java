@@ -20,7 +20,7 @@ public class MaterialQueryServiceImpl implements MaterialQueryService {
 
     @Override
     public Optional<Material> handle(GetMaterialByIdQuery query) {
-        return materialRepository.findById(query.materialId());
+        return materialRepository.findByMaterialId(query.materialId());
     }
 
     @Override

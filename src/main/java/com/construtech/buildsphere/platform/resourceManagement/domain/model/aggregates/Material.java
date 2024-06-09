@@ -2,7 +2,7 @@ package com.construtech.buildsphere.platform.resourceManagement.domain.model.agg
 
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.CreateMaterialCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.MaterialStatus;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.ProjectId;
+import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,12 +13,7 @@ import java.time.LocalDate;
 @Entity
 public class Material extends AuditableAbstractAggregateRoot<Material> {
     @Embedded
-    private ProjectId projectId;
-
-    @Id
-    @Getter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Project project;
 
     @Column(nullable = false)
     @Getter
@@ -45,7 +40,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
     private MaterialStatus status;
 
     public Material() {
-        this.projectId = new ProjectId();
+        this.project = new Project(0);
         this.materialName = Strings.EMPTY;
         this.description = Strings.EMPTY;
         this.status = MaterialStatus.EMPTY;
@@ -54,12 +49,12 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.totalCost = 0.0;
     }
 
-    public Material(ProjectId projectId, String materialName, String description, LocalDate receptionDate, int amount, double totalCost, MaterialStatus status) {
+    public Material(int project, String materialName, String description, String receptionDate, int amount, double totalCost, MaterialStatus status) {
         this();
-        this.projectId = projectId;
+        this.project = new Project(project);
         this.materialName = materialName;
         this.description = description;
-        this.receptionDate = receptionDate;
+        this.receptionDate = LocalDate.parse(receptionDate);
         this.amount = amount;
         this.totalCost = totalCost;
         this.status = status;
@@ -72,7 +67,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.amount = command.amount();
         this.totalCost = command.totalCost();
         this.status = MaterialStatus.valueOf(command.status());
-        this.projectId = new ProjectId(command.projectId());
+        this.project = new Project(command.projectId());
     }
 
     public Material updateMaterial(String materialName, String description, int amount, double totalCost, MaterialStatus status) {
@@ -84,7 +79,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         return this;
     }
 
-    public Long getProjectId() {
-        return projectId.projectId();
+    public int getProjectId() {
+        return project.projectId();
     }
 }

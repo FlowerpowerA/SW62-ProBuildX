@@ -1,7 +1,7 @@
 package com.construtech.buildsphere.platform.resourceManagement.domain.model.aggregates;
 
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.CreateMachineCommand;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.ProjectId;
+import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,12 +12,7 @@ import java.time.LocalDate;
 @Entity
 public class Machine extends AuditableAbstractAggregateRoot<Machine> {
     @Embedded
-    private ProjectId projectId;
-
-    @Id
-    @Getter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Project project;
 
     @Column(nullable = false)
     @Getter
@@ -40,21 +35,21 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
     private double totalCost;
 
     public Machine() {
-        this.projectId = new ProjectId();
-        this.machineName = Strings.EMPTY;
-        this.description = Strings.EMPTY;
+        this.project = new Project(0);
+        this.machineName = "";
+        this.description = "";
         this.receptionDate = LocalDate.now();
         this.endDate = null;
         this.totalCost = 0.0;
     }
 
-    public Machine(ProjectId projectId, String machineName, String description, LocalDate receptionDate, LocalDate endDate, double totalCost) {
+    public Machine(int project, String machineName, String description, String receptionDate, String endDate, double totalCost) {
         this();
-        this.projectId = projectId;
+        this.project = new Project(project);
         this.machineName = machineName;
         this.description = description;
-        this.receptionDate = receptionDate;
-        this.endDate = endDate;
+        this.receptionDate = LocalDate.parse(receptionDate);
+        this.endDate = LocalDate.parse(endDate);
         this.totalCost = totalCost;
     }
 
@@ -64,19 +59,19 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
         this.receptionDate = LocalDate.parse(command.receptionDate());
         this.endDate = LocalDate.parse(command.endDate());
         this.totalCost = command.totalCost();
-        this.projectId = new ProjectId(command.projectId());
+        this.project = new Project(command.projectId());
     }
 
-    public Machine updateMachine(String machineName, String description, LocalDate endDate, double totalCost) {
+    public Machine updateMachine(String machineName, String description, String endDate, double totalCost) {
         this.machineName = machineName;
         this.description = description;
-        this.endDate = endDate;
+        this.endDate = LocalDate.parse(endDate);
         this.totalCost = totalCost;
         return this;
     }
 
-    public Long getProjectId() {
-        return this.projectId.projectId();
+    public int getProject() {
+        return this.project.projectId();
     }
 
 }

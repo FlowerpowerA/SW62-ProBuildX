@@ -8,7 +8,7 @@ import com.construtech.buildsphere.platform.resourceManagement.domain.model.comm
 import java.util.Optional;
 
 public interface MaterialCommandService {
-    Optional<Material> handle(CreateMaterialCommand command);
+    Long handle(CreateMaterialCommand command);
     Optional<Material> handle(UpdateMaterialCommand command);
     void handle(DeleteMaterialCommand command);
 }

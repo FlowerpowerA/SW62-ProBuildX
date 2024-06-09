@@ -75,8 +75,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.projectId = new ProjectId(command.projectId());
     }
 
-    public Material updateMaterial(ProjectId projectId, String materialName, String description, int amount, double totalCost, MaterialStatus status) {
-        this.projectId = projectId;
+    public Material updateMaterial(String materialName, String description, int amount, double totalCost, MaterialStatus status) {
         this.materialName = materialName;
         this.description = description;
         this.amount = amount;

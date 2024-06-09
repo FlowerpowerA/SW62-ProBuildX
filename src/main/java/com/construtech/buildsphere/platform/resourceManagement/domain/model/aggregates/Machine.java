@@ -67,8 +67,7 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
         this.projectId = new ProjectId(command.projectId());
     }
 
-    public Machine updateMachine(ProjectId projectId, String machineName, String description, LocalDate receptionDate, LocalDate endDate, double totalCost) {
-        this.projectId = projectId;
+    public Machine updateMachine(String machineName, String description, LocalDate receptionDate, LocalDate endDate, double totalCost) {
         this.machineName = machineName;
         this.description = description;
         this.receptionDate = receptionDate;

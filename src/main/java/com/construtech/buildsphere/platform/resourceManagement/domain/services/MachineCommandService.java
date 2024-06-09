@@ -8,7 +8,7 @@ import com.construtech.buildsphere.platform.resourceManagement.domain.model.comm
 import java.util.Optional;
 
 public interface MachineCommandService {
-    Optional<Machine> handle(CreateMachineCommand command);
+    Long handle(CreateMachineCommand command);
     Optional<Machine> handle(UpdateMachineCommand command);
     void handle(DeleteMachineCommand command);
 }

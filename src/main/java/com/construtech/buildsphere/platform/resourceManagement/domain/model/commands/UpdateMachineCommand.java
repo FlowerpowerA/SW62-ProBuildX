@@ -1,7 +1,7 @@
 package com.construtech.buildsphere.platform.resourceManagement.domain.model.commands;
 
 public record UpdateMachineCommand(Long id, String machineName, String description, String endDate,
-                                   double totalCost, String status) {
+                                   double totalCost) {
     public UpdateMachineCommand {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("Id must be greater than 0");
@@ -17,10 +17,6 @@ public record UpdateMachineCommand(Long id, String machineName, String descripti
 
         if (totalCost <= 0) {
             throw new IllegalArgumentException("Total cost must be greater than 0");
-        }
-
-        if (status == null || status.isBlank()) {
-            throw new IllegalArgumentException("Status cannot be null or empty");
         }
     }
 }

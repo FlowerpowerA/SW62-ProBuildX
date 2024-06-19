@@ -6,6 +6,6 @@ public record CreateMachineResource(
         String receptionDate,
         String endDate,
         double totalCost,
-        int projectId
+        Long projectId
 ) {
 }

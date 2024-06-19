@@ -10,6 +10,6 @@ public record MaterialResource(
         int amount,
         double totalCost,
         String status,
-        int projectId
+        Long projectId
 ) {
 }

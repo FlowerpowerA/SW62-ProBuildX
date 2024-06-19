@@ -62,7 +62,7 @@ public class MachineController {
 
     @GetMapping("/projectId/{projectId}")
     public ResponseEntity<List<MachineResource>> getAllMachinesByProjectId(@PathVariable Long projectId) {
-        var project = new Project(Math.toIntExact(projectId));
+        var project = new Project(projectId);
         var getAllMachinesByProjectIdQuery = new GetAllMachinesByProjectIdQuery(project);
         var machines = machineQueryService.handle(getAllMachinesByProjectIdQuery);
         var machineResources = machines.stream().map(MachineResourceFromEntityAssembler::toResourceFromEntity).toList();

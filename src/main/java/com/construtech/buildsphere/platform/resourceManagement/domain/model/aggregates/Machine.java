@@ -34,7 +34,7 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
     private double totalCost;
 
     public Machine() {
-        this.project = new Project(0);
+        this.project = new Project(1L);
         this.machineName = "";
         this.description = "";
         this.receptionDate = LocalDate.now();
@@ -42,7 +42,7 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
         this.totalCost = 0.0;
     }
 
-    public Machine(int project, String machineName, String description, String receptionDate, String endDate, double totalCost) {
+    public Machine(Long project, String machineName, String description, String receptionDate, String endDate, double totalCost) {
         this();
         this.project = new Project(project);
         this.machineName = machineName;
@@ -69,8 +69,7 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
         return this;
     }
 
-    public int getProject() {
+    public Long getProject() {
         return this.project.projectId();
     }
-
 }

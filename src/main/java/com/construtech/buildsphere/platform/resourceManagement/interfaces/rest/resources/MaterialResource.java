@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public record MaterialResource(
         Long id,
-        String machineName,
+        String materialName,
         String description,
         LocalDate receptionDate,
         int amount,

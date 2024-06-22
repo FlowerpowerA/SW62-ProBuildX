@@ -1,12 +1,10 @@
 package com.construtech.buildsphere.platform.resourceManagement.domain.model.aggregates;
 
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.CreateMaterialCommand;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.MaterialStatus;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.apache.logging.log4j.util.Strings;
 
 import java.time.LocalDate;
 
@@ -40,7 +38,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
     private String status;
 
     public Material() {
-        this.project = new Project(0);
+        this.project = new Project(0L);
         this.materialName = "";
         this.description = "";
         this.status = "";
@@ -49,7 +47,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.totalCost = 0.0;
     }
 
-    public Material(int project, String materialName, String description, String receptionDate, int amount, double totalCost, String status) {
+    public Material(Long project, String materialName, String description, String receptionDate, int amount, double totalCost, String status) {
         this();
         this.project = new Project(project);
         this.materialName = materialName;
@@ -79,7 +77,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         return this;
     }
 
-    public int getProjectId() {
+    public Long getProjectId() {
         return project.projectId();
     }
 }

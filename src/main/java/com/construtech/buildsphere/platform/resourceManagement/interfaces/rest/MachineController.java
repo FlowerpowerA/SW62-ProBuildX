@@ -74,7 +74,7 @@ public class MachineController {
         var updateMachineCommand = UpdateMachineCommandFromResourceAssembler.toCommandFromResource(machineId, updateMachineResource);
         var updateMachine = machineCommandService.handle(updateMachineCommand);
         if (updateMachine.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
         var machineResource = MachineResourceFromEntityAssembler.toResourceFromEntity(updateMachine.get());
         return ResponseEntity.ok(machineResource);

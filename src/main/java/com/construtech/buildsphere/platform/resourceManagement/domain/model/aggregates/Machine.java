@@ -34,7 +34,7 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
     private double totalCost;
 
     public Machine() {
-        this.project = new Project(1L);
+        this.project = new Project(0L);
         this.machineName = "";
         this.description = "";
         this.receptionDate = LocalDate.now();

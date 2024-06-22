@@ -1,6 +1,6 @@
 package com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects;
 
-public enum MaterialStatus {
+public enum Status {
     NEW,
     HALF_USED,
     USED,

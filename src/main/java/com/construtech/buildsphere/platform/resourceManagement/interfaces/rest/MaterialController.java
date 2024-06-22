@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/materials", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/resources/materials", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Materials", description = "Materials Management Endpoint")
 public class MaterialController {
     private final MaterialCommandService materialCommandService;

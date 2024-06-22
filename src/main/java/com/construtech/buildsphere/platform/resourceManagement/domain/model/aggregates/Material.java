@@ -1,12 +1,10 @@
 package com.construtech.buildsphere.platform.resourceManagement.domain.model.aggregates;
 
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.CreateMaterialCommand;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.MaterialStatus;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.apache.logging.log4j.util.Strings;
 
 import java.time.LocalDate;
 

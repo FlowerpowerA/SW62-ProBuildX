@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
+
 @Getter
 @Entity
 public class Team extends AuditableAbstractAggregateRoot<Team> {

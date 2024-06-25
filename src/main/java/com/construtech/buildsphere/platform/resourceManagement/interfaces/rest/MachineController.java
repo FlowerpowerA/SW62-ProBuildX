@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/inventory/machines", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/v1/machines", produces = MediaType.APPLICATION_JSON_VALUE)
 @Tag(name = "Machines", description = "Machines Management Endpoint")
 public class MachineController {
     private final MachineCommandService machineCommandService;

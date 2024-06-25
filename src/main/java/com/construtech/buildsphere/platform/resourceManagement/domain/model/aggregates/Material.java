@@ -38,7 +38,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
     private String status;
 
     public Material() {
-        this.project = new Project(0L);
+        this.project = new Project(null);
         this.materialName = "";
         this.description = "";
         this.status = "";

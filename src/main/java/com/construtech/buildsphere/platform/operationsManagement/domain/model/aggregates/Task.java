@@ -47,15 +47,17 @@ public class Task extends AuditableAbstractAggregateRoot<Task> {
         this.project = new Project(project);
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-        this.startDate = LocalDate.parse(startDate);
-        this.maxEndDate = LocalDate.parse(maxEndDate);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        this.startDate = LocalDate.parse(startDate, formatter);
+        this.maxEndDate = LocalDate.parse(maxEndDate, formatter);
     }
 
     public Task(CreateTaskCommand command){
         this.taskName = command.taskName();
         this.taskDescription = command.taskDescription();
-        this.startDate = LocalDate.parse(command.startDate());
-        this.maxEndDate = LocalDate.parse(command.maxEndDate());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        this.startDate = LocalDate.parse(command.startDate(),formatter);
+        this.maxEndDate = LocalDate.parse(command.maxEndDate(),formatter);
         this.project = new Project(command.project());
         this.team = command.teamId();
     }

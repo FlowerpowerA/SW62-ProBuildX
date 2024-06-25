@@ -1,5 +1,16 @@
 package com.construtech.buildsphere.platform.project_management.interfaces.rest;
 
+import com.construtech.buildsphere.platform.operationsManagement.domain.model.queries.GetAllTaskByProjectIdQuery;
+import com.construtech.buildsphere.platform.operationsManagement.domain.model.queries.GetAllTeamsByProjectIdQuery;
+import com.construtech.buildsphere.platform.operationsManagement.domain.model.queries.GetAllWorkersByProjectIdQuery;
+import com.construtech.buildsphere.platform.operationsManagement.domain.model.valueobjects.Project;
+import com.construtech.buildsphere.platform.operationsManagement.domain.services.*;
+import com.construtech.buildsphere.platform.operationsManagement.interfaces.resources.TaskResource;
+import com.construtech.buildsphere.platform.operationsManagement.interfaces.resources.TeamResource;
+import com.construtech.buildsphere.platform.operationsManagement.interfaces.resources.WorkerResource;
+import com.construtech.buildsphere.platform.operationsManagement.interfaces.transform.TaskResourceFromEntityAssembler;
+import com.construtech.buildsphere.platform.operationsManagement.interfaces.transform.TeamResourceFromEntityAssembler;
+import com.construtech.buildsphere.platform.operationsManagement.interfaces.transform.WorkerResourceFromEntityAssembler;
 import com.construtech.buildsphere.platform.project_management.domain.model.aggregates.Dashboard;
 import com.construtech.buildsphere.platform.project_management.domain.model.commands.CreateProjectCommand;
 import com.construtech.buildsphere.platform.project_management.domain.model.commands.UpdateProjectCommand;
@@ -27,9 +38,16 @@ public class ProjectController {
     private final ProjectCommandService projectCommandService;
     private final ProjectQueryService projectQueryService;
 
-    public ProjectController(ProjectCommandService projectCommandService, ProjectQueryService projectQueryService) {
+    private final TaskQueryService taskQueryService;
+    private final TeamQueryService teamQueryService;
+    private final WorkerQueryService workerQueryService;
+
+    public ProjectController(ProjectCommandService projectCommandService, ProjectQueryService projectQueryService, TaskQueryService taskQueryService, TeamQueryService teamQueryService, WorkerQueryService workerQueryService) {
         this.projectCommandService = projectCommandService;
         this.projectQueryService = projectQueryService;
+        this.taskQueryService = taskQueryService;
+        this.teamQueryService = teamQueryService;
+        this.workerQueryService = workerQueryService;
     }
 
     @PostMapping
@@ -81,5 +99,32 @@ public class ProjectController {
         if (dashboard.isEmpty()) return ResponseEntity.notFound().build();
         var projectResource = ProjectResourceFromEntityAssembler.toResourceFromEntity(dashboard.get().getProject());
         return ResponseEntity.ok(projectResource);
+    }
+
+    @GetMapping("/{projectId}/tasks")
+    public ResponseEntity<List<TaskResource>> getAllTaskByProjectId(@PathVariable Long projectId){
+        var project = new Project(projectId);
+        var getAllTasksByProjectIdQuery = new GetAllTaskByProjectIdQuery(project);
+        var tasks = taskQueryService.handle(getAllTasksByProjectIdQuery);
+        var taskResources = tasks.stream().map(TaskResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(taskResources);
+    }
+
+    @GetMapping("/{projectId}/teams")
+    public ResponseEntity<List<TeamResource>> getAllTeamsByProjectId(@PathVariable Long projectId){
+        var project = new Project(projectId);
+        var getAllTeamsByProjectIdQuery = new GetAllTeamsByProjectIdQuery(project);
+        var teams = teamQueryService.handle(getAllTeamsByProjectIdQuery);
+        var teamResources = teams.stream().map(TeamResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(teamResources);
+    }
+
+    @GetMapping("{projectId}/workers")
+    public  ResponseEntity<List<WorkerResource>> getAllWorkersByProjectId(@PathVariable Long projectId){
+        var project = new Project(projectId);
+        var getAllWorkersByProjectIdQuery = new GetAllWorkersByProjectIdQuery(project);
+        var workers = workerQueryService.handle(getAllWorkersByProjectIdQuery);
+        var workerResources = workers.stream().map(WorkerResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(workerResources);
     }
 }

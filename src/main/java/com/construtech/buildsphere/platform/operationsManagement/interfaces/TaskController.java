@@ -1,7 +1,6 @@
 package com.construtech.buildsphere.platform.operationsManagement.interfaces;
 
 
-import com.construtech.buildsphere.platform.operationsManagement.domain.model.aggregates.Team;
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.commands.DeleteTaskCommand;
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.queries.GetAllTaskByProjectIdQuery;
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.queries.GetAllTaskByTeamIdQuery;
@@ -63,14 +62,6 @@ public class TaskController {
         return ResponseEntity.ok(taskResource);
     }
 
-    @GetMapping("/projectId/{projectId}")
-    public ResponseEntity<List<TaskResource>> getAllTaskByProjectId(@PathVariable Long projectId){
-        var project = new Project(projectId);
-        var getAllTasksByProjectIdQuery = new GetAllTaskByProjectIdQuery(project);
-        var tasks = taskQueryService.handle(getAllTasksByProjectIdQuery);
-        var taskResources = tasks.stream().map(TaskResourceFromEntityAssembler::toResourceFromEntity).toList();
-        return ResponseEntity.ok(taskResources);
-    }
 
     @GetMapping("/teams/{teamId}")
     public ResponseEntity<List<TaskResource>> getAllTaskByTeamId(@PathVariable Long teamId){

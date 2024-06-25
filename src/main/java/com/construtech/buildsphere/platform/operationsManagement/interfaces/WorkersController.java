@@ -63,7 +63,7 @@ public class WorkersController {
 
     @GetMapping("/projectId/{projectId}")
     public  ResponseEntity<List<WorkerResource>> getAllWorkersByProjectId(@PathVariable Long projectId){
-        var project = new Project(Math.toIntExact(projectId));
+        var project = new Project(projectId);
         var getAllWorkersByProjectIdQuery = new GetAllWorkersByProjectIdQuery(project);
         var workers = workerQueryService.handle(getAllWorkersByProjectIdQuery);
         var workerResources = workers.stream().map(WorkerResourceFromEntityAssembler::toResourceFromEntity).toList();

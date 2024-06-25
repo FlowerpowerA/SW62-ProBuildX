@@ -3,6 +3,6 @@ package com.construtech.buildsphere.platform.operationsManagement.interfaces.res
 public record CreateTeamResource(
         String teamName,
         String description,
-        int projectId
+        Long projectId
 ) {
 }

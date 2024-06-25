@@ -63,7 +63,7 @@ public class TeamsController {
 
     @GetMapping("/projectId/{projectId}")
     public ResponseEntity<List<TeamResource>> getAllTeamsByProjectId(@PathVariable Long projectId){
-        var project = new Project(Math.toIntExact(projectId));
+        var project = new Project(projectId);
         var getAllTeamsByProjectIdQuery = new GetAllTeamsByProjectIdQuery(project);
         var teams = teamQueryService.handle(getAllTeamsByProjectIdQuery);
         var teamResources = teams.stream().map(TeamResourceFromEntityAssembler::toResourceFromEntity).toList();

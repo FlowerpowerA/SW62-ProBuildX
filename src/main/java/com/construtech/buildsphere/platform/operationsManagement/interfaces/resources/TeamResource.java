@@ -4,6 +4,6 @@ public record TeamResource(
         Long id,
         String teamName,
         String description,
-        int projectId
+        Long projectId
 ) {
 }

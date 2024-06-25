@@ -24,10 +24,10 @@ public class Team extends AuditableAbstractAggregateRoot<Team> {
     public Team(){
         this.teamName = Strings.EMPTY;
         this.description = Strings.EMPTY;
-        this.project = new Project(0);
+        this.project = new Project(null);
     }
 
-    public Team(String teamName, String description, int project){
+    public Team(String teamName, String description, Long project){
         this();
         this.teamName = teamName;
         this.description = description;
@@ -46,7 +46,7 @@ public class Team extends AuditableAbstractAggregateRoot<Team> {
         return this;
     }
 
-    public int getProjectId(){
+    public Long getProjectId(){
         return project.projectEnt();
     }
 }

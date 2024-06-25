@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Getter
@@ -34,14 +35,14 @@ public class Task extends AuditableAbstractAggregateRoot<Task> {
     private Long team;//Foreign key
 
     public Task(){
-        this.project = new Project(0);
+        this.project = new Project(null);
         this.taskName = "";
         this.taskDescription = "";
         this.startDate = null;
         this.maxEndDate = null;
     }
 
-    public Task(int project, String taskName, String taskDescription, String startDate, String maxEndDate){
+    public Task(Long project, String taskName, String taskDescription, String startDate, String maxEndDate){
         this();
         this.project = new Project(project);
         this.taskName = taskName;
@@ -68,8 +69,18 @@ public class Task extends AuditableAbstractAggregateRoot<Task> {
         return this;
     }
 
-    public int getProjectId(){
+    public Long getProjectId(){
         return project.projectEnt();
     }
 
+    public String getStartDate(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String fechaString = startDate.format(formatter);
+        return fechaString;
+    }
+    public String getMaxEndDate(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String fechaString = maxEndDate.format(formatter);
+        return fechaString;
+    }
 }

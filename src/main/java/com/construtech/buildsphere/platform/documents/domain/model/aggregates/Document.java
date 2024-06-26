@@ -42,7 +42,7 @@ public class Document extends AuditableAbstractAggregateRoot<Document> {
         this.name = command.name();
         this.description = command.description();
         this.fileType = command.fileType();
-        this.project = new ProjectD((long) command.project());
+        this.project = new ProjectD(command.project());
     }
 
     public Document updateInformation(String name, String description, String fileType){

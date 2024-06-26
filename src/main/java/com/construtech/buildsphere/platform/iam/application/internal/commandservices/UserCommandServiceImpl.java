@@ -40,7 +40,7 @@ public class UserCommandServiceImpl implements UserCommandService {
         var stringRoles = command.roles();
         var roles = new ArrayList<Role>();
         if (stringRoles == null || stringRoles.isEmpty()) {
-            var storedRole = roleRepository.findByName(Roles.ROLE_USER);
+            var storedRole = roleRepository.findByName(Roles.BUSINESS);
             storedRole.ifPresent(roles::add);
         } else {
             stringRoles.forEach(role -> {

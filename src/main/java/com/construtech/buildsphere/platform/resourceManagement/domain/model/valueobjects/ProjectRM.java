@@ -3,5 +3,5 @@ package com.construtech.buildsphere.platform.resourceManagement.domain.model.val
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public record Project(Long projectId) {
+public record ProjectRM(Long projectId) {
 }

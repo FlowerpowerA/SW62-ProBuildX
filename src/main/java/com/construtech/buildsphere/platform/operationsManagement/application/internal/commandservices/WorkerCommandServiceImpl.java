@@ -23,7 +23,7 @@ public class WorkerCommandServiceImpl implements WorkerCommandService {
     public Long handle(CreateWorkerCommand command){
         var projectId = new Project(command.project());
         if (workerRepository.existsByFullNameAndProject(command.fullName(), projectId)){
-            throw new IllegalArgumentException("Worker with the same name already exists in the project");
+            throw new IllegalArgumentException("Worker with the same name already exists in the projectRM");
         }
         var worker = new Worker(command);
         try{

@@ -4,7 +4,7 @@ import com.construtech.buildsphere.platform.resourceManagement.domain.model.aggr
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.CreateMachineCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.DeleteMachineCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.UpdateMachineCommand;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
+import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.ProjectRM;
 import com.construtech.buildsphere.platform.resourceManagement.domain.services.MachineCommandService;
 import com.construtech.buildsphere.platform.resourceManagement.infrastructure.persistence.jpa.repositories.MachineRepository;
 import org.springframework.stereotype.Service;
@@ -22,9 +22,9 @@ public class MachineCommandServiceImpl implements MachineCommandService {
 
     @Override
     public Long handle(CreateMachineCommand command) {
-        var projectId = new Project(command.project());
+        var projectId = new ProjectRM(command.project());
         if (machineRepository.existsByMachineNameAndProject(command.machineName(), projectId)) {
-            throw new IllegalArgumentException("Machine with the same name is already exists in the project");
+            throw new IllegalArgumentException("Machine with the same name is already exists in the projectRM");
         }
         var machine = new Machine(command);
         try {
@@ -38,7 +38,7 @@ public class MachineCommandServiceImpl implements MachineCommandService {
     @Override
     public Optional<Machine> handle(UpdateMachineCommand command) {
         if (machineRepository.existsByMachineNameAndIdIsNot(command.machineName(), command.id())) {
-            throw new IllegalArgumentException("Machine with the same name already exists in the project");
+            throw new IllegalArgumentException("Machine with the same name already exists in the projectRM");
         }
 
         var result = machineRepository.findById(command.id());

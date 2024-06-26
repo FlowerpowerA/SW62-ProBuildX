@@ -7,6 +7,6 @@ public class MachineResourceFromEntityAssembler {
     public static MachineResource toResourceFromEntity(Machine entity) {
         return new MachineResource(entity.getId(), entity.getMachineName(),
                 entity.getDescription(), entity.getReceptionDate(), entity.getEndDate()
-        ,entity.getTotalCost(), entity.getProject());
+        ,entity.getTotalCost(), entity.getProjectRM());
     }
 }

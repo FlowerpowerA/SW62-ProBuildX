@@ -1,17 +1,15 @@
 package com.construtech.buildsphere.platform.resourceManagement.domain.model.aggregates;
 
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.CreateMaterialCommand;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
+import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.ProjectRM;
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.time.LocalDate;
-
 @Entity
 public class Material extends AuditableAbstractAggregateRoot<Material> {
     @Embedded
-    private Project project;
+    private ProjectRM project;
 
     @Column(nullable = false)
     @Getter
@@ -38,7 +36,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
     private String materialStatus;
 
     public Material() {
-        this.project = new Project(null);
+        this.project = new ProjectRM(null);
         this.materialName = "";
         this.description = "";
         this.materialStatus = "";
@@ -49,7 +47,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
 
     public Material(Long project, String materialName, String description, String receptionDate, int amount, double totalCost, String materialStatus) {
         this();
-        this.project = new Project(project);
+        this.project = new ProjectRM(project);
         this.materialName = materialName;
         this.description = description;
         this.receptionDate = receptionDate;
@@ -65,7 +63,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.amount = command.amount();
         this.totalCost = command.totalCost();
         this.materialStatus = command.materialStatus();
-        this.project = new Project(command.project());
+        this.project = new ProjectRM(command.project());
     }
 
     public Material updateMaterial(String materialName, String description, int amount, double totalCost, String status) {

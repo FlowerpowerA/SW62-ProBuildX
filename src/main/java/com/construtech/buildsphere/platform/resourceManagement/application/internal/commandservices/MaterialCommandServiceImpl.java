@@ -4,7 +4,7 @@ import com.construtech.buildsphere.platform.resourceManagement.domain.model.aggr
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.CreateMaterialCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.DeleteMaterialCommand;
 import com.construtech.buildsphere.platform.resourceManagement.domain.model.commands.UpdateMaterialCommand;
-import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.Project;
+import com.construtech.buildsphere.platform.resourceManagement.domain.model.valueobjects.ProjectRM;
 import com.construtech.buildsphere.platform.resourceManagement.domain.services.MaterialCommandService;
 import com.construtech.buildsphere.platform.resourceManagement.infrastructure.persistence.jpa.repositories.MaterialRepository;
 import org.springframework.stereotype.Service;
@@ -22,11 +22,11 @@ public class MaterialCommandServiceImpl implements MaterialCommandService {
 
     @Override
     public Long handle(CreateMaterialCommand command) {
-        var projectId = new Project(command.project());
+        var projectId = new ProjectRM(command.project());
 
         if(materialRepository.existsByMaterialNameAndProject(command.materialName(), projectId)) {
             throw new IllegalArgumentException("Material with name " +
-                    command.materialName() + " already exists in the project");
+                    command.materialName() + " already exists in the projectRM");
         }
 
         var material = new Material(command);
@@ -43,7 +43,7 @@ public class MaterialCommandServiceImpl implements MaterialCommandService {
     @Override
     public Optional<Material> handle(UpdateMaterialCommand command) {
         if (materialRepository.existsByMaterialNameAndIdNot(command.materialName(), command.id())) {
-            throw new IllegalArgumentException("Material with the same name already exists in the project");
+            throw new IllegalArgumentException("Material with the same name already exists in the projectRM");
         }
 
         var result = materialRepository.findById(command.id());

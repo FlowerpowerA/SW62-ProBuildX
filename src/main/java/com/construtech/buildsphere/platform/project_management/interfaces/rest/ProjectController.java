@@ -1,5 +1,12 @@
 package com.construtech.buildsphere.platform.project_management.interfaces.rest;
 
+
+import com.construtech.buildsphere.platform.documents.domain.model.queries.GetAllDocumentsByProjectIdQuery;
+import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.Project;
+import com.construtech.buildsphere.platform.documents.domain.services.DocumentCommandService;
+import com.construtech.buildsphere.platform.documents.domain.services.DocumentQueryService;
+import com.construtech.buildsphere.platform.documents.interfaces.rest.resources.DocumentResource;
+import com.construtech.buildsphere.platform.documents.interfaces.rest.transform.DocumentResourceFromEntityAssembler;
 import com.construtech.buildsphere.platform.project_management.domain.model.aggregates.Dashboard;
 import com.construtech.buildsphere.platform.project_management.domain.model.commands.CreateProjectCommand;
 import com.construtech.buildsphere.platform.project_management.domain.model.commands.UpdateProjectCommand;
@@ -27,9 +34,15 @@ public class ProjectController {
     private final ProjectCommandService projectCommandService;
     private final ProjectQueryService projectQueryService;
 
-    public ProjectController(ProjectCommandService projectCommandService, ProjectQueryService projectQueryService) {
+    private final DocumentQueryService documentQueryService;
+    private final DocumentCommandService documentCommandService;
+
+
+    public ProjectController(ProjectCommandService projectCommandService, ProjectQueryService projectQueryService, DocumentQueryService documentQueryService, DocumentCommandService documentCommandService) {
         this.projectCommandService = projectCommandService;
         this.projectQueryService = projectQueryService;
+        this.documentQueryService = documentQueryService;
+        this.documentCommandService = documentCommandService;
     }
 
     @PostMapping
@@ -81,5 +94,44 @@ public class ProjectController {
         if (dashboard.isEmpty()) return ResponseEntity.notFound().build();
         var projectResource = ProjectResourceFromEntityAssembler.toResourceFromEntity(dashboard.get().getProject());
         return ResponseEntity.ok(projectResource);
+    }
+
+    /*
+    @GetMapping("/{projectId}/tasks")
+    public ResponseEntity<List<TaskResource>> getAllTaskByProjectId(@PathVariable Long projectId){
+        var project = new Project(projectId);
+        var getAllTasksByProjectIdQuery = new GetAllTaskByProjectIdQuery(project);
+        var tasks = taskQueryService.handle(getAllTasksByProjectIdQuery);
+        var taskResources = tasks.stream().map(TaskResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(taskResources);
+    }
+
+    @GetMapping("/{projectId}/teams")
+    public ResponseEntity<List<TeamResource>> getAllTeamsByProjectId(@PathVariable Long projectId){
+        var project = new Project(projectId);
+        var getAllTeamsByProjectIdQuery = new GetAllTeamsByProjectIdQuery(project);
+        var teams = teamQueryService.handle(getAllTeamsByProjectIdQuery);
+        var teamResources = teams.stream().map(TeamResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(teamResources);
+    }
+
+    @GetMapping("{projectId}/workers")
+    public  ResponseEntity<List<WorkerResource>> getAllWorkersByProjectId(@PathVariable Long projectId){
+        var project = new Project(projectId);
+        var getAllWorkersByProjectIdQuery = new GetAllWorkersByProjectIdQuery(project);
+        var workers = workerQueryService.handle(getAllWorkersByProjectIdQuery);
+        var workerResources = workers.stream().map(WorkerResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(workerResources);
+    }
+
+     */
+
+    @GetMapping("/{projectId}/documents")
+    public ResponseEntity<List<DocumentResource>> getAllDocumentsByProjectId(@PathVariable Long projectId){
+        var project = new Project(projectId);
+        var getAllDocumentsByProjectIdQuery = new GetAllDocumentsByProjectIdQuery(project);
+        var documents = documentQueryService.handle(getAllDocumentsByProjectIdQuery);
+        var documentResources = documents.stream().map(DocumentResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(documentResources);
     }
 }

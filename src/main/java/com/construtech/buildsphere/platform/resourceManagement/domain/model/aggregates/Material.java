@@ -23,7 +23,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
 
     @Column(nullable = false, updatable = false)
     @Getter
-    private LocalDate receptionDate;
+    private String receptionDate;
 
     @Column(nullable = false)
     @Getter
@@ -42,7 +42,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.materialName = "";
         this.description = "";
         this.materialStatus = "";
-        this.receptionDate = LocalDate.now();
+        this.receptionDate = "";
         this.amount = 0;
         this.totalCost = 0.0;
     }
@@ -52,7 +52,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.project = new Project(project);
         this.materialName = materialName;
         this.description = description;
-        this.receptionDate = LocalDate.parse(receptionDate);
+        this.receptionDate = receptionDate;
         this.amount = amount;
         this.totalCost = totalCost;
         this.materialStatus = materialStatus;
@@ -61,7 +61,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
     public Material(CreateMaterialCommand command) {
         this.materialName = command.materialName();
         this.description = command.description();
-        this.receptionDate = LocalDate.parse(command.receptionDate());
+        this.receptionDate = command.receptionDate();
         this.amount = command.amount();
         this.totalCost = command.totalCost();
         this.materialStatus = command.materialStatus();

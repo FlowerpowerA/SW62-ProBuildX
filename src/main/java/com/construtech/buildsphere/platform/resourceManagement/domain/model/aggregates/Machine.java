@@ -23,11 +23,11 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
 
     @Column(nullable = false, updatable = false)
     @Getter
-    private LocalDate receptionDate;
+    private String receptionDate;
 
     @Column(nullable = false)
     @Getter
-    private LocalDate endDate;
+    private String endDate;
 
     @Column(nullable = false)
     @Getter
@@ -37,8 +37,8 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
         this.project = new Project(null);
         this.machineName = "";
         this.description = "";
-        this.receptionDate = LocalDate.now();
-        this.endDate = null;
+        this.receptionDate = "";
+        this.endDate = "";
         this.totalCost = 0.0;
     }
 
@@ -47,16 +47,16 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
         this.project = new Project(project);
         this.machineName = machineName;
         this.description = description;
-        this.receptionDate = LocalDate.parse(receptionDate);
-        this.endDate = LocalDate.parse(endDate);
+        this.receptionDate = receptionDate;
+        this.endDate = endDate;
         this.totalCost = totalCost;
     }
 
     public Machine(CreateMachineCommand command) {
         this.machineName = command.machineName();
         this.description = command.description();
-        this.receptionDate = LocalDate.parse(command.receptionDate());
-        this.endDate = LocalDate.parse(command.endDate());
+        this.receptionDate = command.receptionDate();
+        this.endDate = command.endDate();
         this.totalCost = command.totalCost();
         this.project = new Project(command.project());
     }
@@ -64,7 +64,7 @@ public class Machine extends AuditableAbstractAggregateRoot<Machine> {
     public Machine updateMachine(String machineName, String description, String endDate, double totalCost) {
         this.machineName = machineName;
         this.description = description;
-        this.endDate = LocalDate.parse(endDate);
+        this.endDate = endDate;
         this.totalCost = totalCost;
         return this;
     }

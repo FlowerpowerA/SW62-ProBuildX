@@ -6,7 +6,7 @@ public record MaterialResource(
         Long id,
         String materialName,
         String description,
-        LocalDate receptionDate,
+        String receptionDate,
         int amount,
         double totalCost,
         String materialStatus,

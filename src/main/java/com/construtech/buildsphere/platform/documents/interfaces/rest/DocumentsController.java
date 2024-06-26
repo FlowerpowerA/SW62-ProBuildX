@@ -62,7 +62,7 @@ public class DocumentsController {
 
     @GetMapping("/projectId/{projectId}")
     public  ResponseEntity<List<DocumentResource>> getAllDocumentsByProjectId(@PathVariable Long projectId){
-        var project = new Project(Math.toIntExact(projectId));
+        var project = new Project(projectId);
         var getAllDocumentsByProjectIdQuery = new GetAllDocumentsByProjectIdQuery(project);
         var documents = documentQueryService.handle(getAllDocumentsByProjectIdQuery);
         var documentResources = documents.stream().map(DocumentResourceFromEntityAssembler::toResourceFromEntity).toList();

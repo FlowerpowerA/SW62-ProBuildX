@@ -4,7 +4,7 @@ import com.construtech.buildsphere.platform.documents.domain.model.aggregates.Do
 import com.construtech.buildsphere.platform.documents.domain.model.commands.CreateDocumentCommand;
 import com.construtech.buildsphere.platform.documents.domain.model.commands.DeleteDocumentCommand;
 import com.construtech.buildsphere.platform.documents.domain.model.commands.UpdateDocumentCommand;
-import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.Project;
+import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.ProjectD;
 import com.construtech.buildsphere.platform.documents.domain.services.DocumentCommandService;
 import com.construtech.buildsphere.platform.documents.infrastructure.persistence.jpa.repositories.DocumentRepository;
 import org.springframework.stereotype.Service;
@@ -21,9 +21,9 @@ public class DocumentCommandServiceImpl implements DocumentCommandService {
 
     @Override
     public Long handle(CreateDocumentCommand command){
-        var projectId = new Project(command.project());
+        var projectId = new ProjectD(command.project());
         if (documentRepository.existsByNameAndProject(command.name(), projectId)){
-            throw new IllegalArgumentException("Document with the same name already exists in the project");
+            throw new IllegalArgumentException("Document with the same name already exists in the projectRM");
         }
         var document = new Document(command);
         try{

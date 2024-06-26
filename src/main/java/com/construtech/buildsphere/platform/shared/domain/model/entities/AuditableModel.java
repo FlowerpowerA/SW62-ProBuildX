@@ -1,4 +1,4 @@
-package com.construtech.buildsphere.platform.shared.domain.model.entitties;
+package com.construtech.buildsphere.platform.shared.domain.model.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

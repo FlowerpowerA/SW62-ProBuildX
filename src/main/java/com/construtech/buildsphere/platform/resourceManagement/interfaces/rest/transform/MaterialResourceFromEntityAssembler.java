@@ -7,6 +7,6 @@ public class MaterialResourceFromEntityAssembler {
     public static MaterialResource toResourceFromEntity(Material entity) {
         return new MaterialResource(entity.getId(), entity.getMaterialName(),
                 entity.getDescription(), entity.getReceptionDate(),
-                entity.getAmount(), entity.getTotalCost(), entity.getStatus(), entity.getProjectId());
+                entity.getAmount(), entity.getTotalCost(), entity.getMaterialStatus(), entity.getProjectId());
     }
 }

@@ -35,19 +35,19 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
 
     @Getter
     @Column
-    private String status;
+    private String materialStatus;
 
     public Material() {
         this.project = new Project(null);
         this.materialName = "";
         this.description = "";
-        this.status = "";
+        this.materialStatus = "";
         this.receptionDate = LocalDate.now();
         this.amount = 0;
         this.totalCost = 0.0;
     }
 
-    public Material(Long project, String materialName, String description, String receptionDate, int amount, double totalCost, String status) {
+    public Material(Long project, String materialName, String description, String receptionDate, int amount, double totalCost, String materialStatus) {
         this();
         this.project = new Project(project);
         this.materialName = materialName;
@@ -55,7 +55,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.receptionDate = LocalDate.parse(receptionDate);
         this.amount = amount;
         this.totalCost = totalCost;
-        this.status = status;
+        this.materialStatus = materialStatus;
     }
 
     public Material(CreateMaterialCommand command) {
@@ -64,7 +64,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.receptionDate = LocalDate.parse(command.receptionDate());
         this.amount = command.amount();
         this.totalCost = command.totalCost();
-        this.status = command.status();
+        this.materialStatus = command.materialStatus();
         this.project = new Project(command.project());
     }
 
@@ -73,7 +73,7 @@ public class Material extends AuditableAbstractAggregateRoot<Material> {
         this.description = description;
         this.amount = amount;
         this.totalCost = totalCost;
-        this.status = status;
+        this.materialStatus = status;
         return this;
     }
 

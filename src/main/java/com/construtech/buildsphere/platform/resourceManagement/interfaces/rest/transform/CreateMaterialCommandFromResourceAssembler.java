@@ -6,6 +6,6 @@ import com.construtech.buildsphere.platform.resourceManagement.interfaces.rest.r
 public class CreateMaterialCommandFromResourceAssembler {
     public static CreateMaterialCommand toCommandFromResource(CreateMaterialResource resource) {
       return new CreateMaterialCommand(resource.materialName(), resource.description(),
-              resource.receptionDate(), resource.amount(), resource.totalCost(), resource.status(), resource.projectId());
+              resource.receptionDate(), resource.amount(), resource.totalCost(), resource.materialStatus(), resource.projectId());
     }
 }

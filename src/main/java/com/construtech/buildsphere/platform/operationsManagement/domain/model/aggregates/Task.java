@@ -8,10 +8,6 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
 @Getter
 @Entity
 public class Task extends AuditableAbstractAggregateRoot<Task> {
@@ -26,10 +22,10 @@ public class Task extends AuditableAbstractAggregateRoot<Task> {
     private String taskDescription;
 
     @Column
-    private LocalDate startDate;
+    private String startDate;
 
     @Column
-    private LocalDate maxEndDate;
+    private String maxEndDate;
 
     @Column
     private Long team;//Foreign key
@@ -47,18 +43,15 @@ public class Task extends AuditableAbstractAggregateRoot<Task> {
         this.project = new Project(project);
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        this.startDate = LocalDate.parse(startDate, formatter);
-        this.maxEndDate = LocalDate.parse(maxEndDate, formatter);
+        this.startDate = startDate;
+        this.maxEndDate = maxEndDate;
     }
 
     public Task(CreateTaskCommand command){
         this.taskName = command.taskName();
         this.taskDescription = command.taskDescription();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        this.startDate = LocalDate.parse(command.startDate(), formatter);
-        this.maxEndDate = LocalDate.parse(command.maxEndDate(), formatter);
+        this.startDate = command.startDate();
+        this.maxEndDate = command.maxEndDate();
         this.project = new Project(command.project());
         this.team = command.teamId();
     }
@@ -66,9 +59,8 @@ public class Task extends AuditableAbstractAggregateRoot<Task> {
     public Task updateInformation(String taskName, String taskDescription, String startDate, String maxEndDate, Long team){
         this.taskName = taskName;
         this.taskDescription =taskDescription;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        this.startDate = LocalDate.parse(startDate, formatter);
-        this.maxEndDate = LocalDate.parse(maxEndDate, formatter);
+        this.startDate = startDate;
+        this.maxEndDate = maxEndDate;
         this.team = team;
         return this;
     }
@@ -78,13 +70,10 @@ public class Task extends AuditableAbstractAggregateRoot<Task> {
     }
 
     public String getStartDate(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String fechaString = startDate.format(formatter);
-        return fechaString;
+        return startDate;
     }
+
     public String getMaxEndDate(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String fechaString = maxEndDate.format(formatter);
-        return fechaString;
+        return maxEndDate;
     }
 }

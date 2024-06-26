@@ -62,7 +62,7 @@ public class MaterialController {
 
     @GetMapping("/projectId/{projectId}")
     public ResponseEntity<List<MaterialResource>> getAllMaterialsByProjectId(@PathVariable Long projectId) {
-        var project = new Project((Math.toIntExact(projectId)));
+        var project = new Project(projectId);
         var getAllMaterialsByProjectIdQuery = new GetAllMaterialsByProjectIdQuery(project);
         var materials = materialQueryService.handle(getAllMaterialsByProjectIdQuery);
         var materialResources = materials.stream().map(MaterialResourceFromEntityAssembler::toResourceFromEntity).toList();

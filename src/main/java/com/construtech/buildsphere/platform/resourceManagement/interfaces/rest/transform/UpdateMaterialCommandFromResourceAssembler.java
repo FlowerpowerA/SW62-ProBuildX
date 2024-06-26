@@ -6,7 +6,7 @@ import com.construtech.buildsphere.platform.resourceManagement.interfaces.rest.r
 public class UpdateMaterialCommandFromResourceAssembler {
     public static UpdateMaterialCommand toCommandFromResource(Long id, UpdateMaterialResource resource) {
         return new UpdateMaterialCommand(id, resource.materialName(), resource.description(),
-                resource.amount(), resource.totalCost(), resource.status());
+                resource.amount(), resource.totalCost(), resource.materialStatus());
     }
 
 }

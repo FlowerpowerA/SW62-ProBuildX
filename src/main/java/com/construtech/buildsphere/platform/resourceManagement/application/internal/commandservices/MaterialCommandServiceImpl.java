@@ -55,7 +55,7 @@ public class MaterialCommandServiceImpl implements MaterialCommandService {
 
         try {
             var updatedMaterial = materialRepository.save(materialToUpdate.updateMaterial(command.materialName()
-                    , command.description(), command.amount(), command.totalCost(), command.status()));
+                    , command.description(), command.amount(), command.totalCost(), command.materialStatus()));
             return Optional.of(updatedMaterial);
         } catch (Exception e) {
             throw new IllegalArgumentException("Error while updating material: " + e.getMessage());

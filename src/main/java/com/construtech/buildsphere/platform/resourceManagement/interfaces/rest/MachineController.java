@@ -62,7 +62,7 @@ public class MachineController {
 
     @GetMapping("/projectId/{projectId}")
     public ResponseEntity<List<MachineResource>> getAllMachinesByProjectId(@PathVariable Long projectId) {
-        var project = new Project(Math.toIntExact(projectId));
+        var project = new Project(projectId);
         var getAllMachinesByProjectIdQuery = new GetAllMachinesByProjectIdQuery(project);
         var machines = machineQueryService.handle(getAllMachinesByProjectIdQuery);
         var machineResources = machines.stream().map(MachineResourceFromEntityAssembler::toResourceFromEntity).toList();
@@ -74,7 +74,7 @@ public class MachineController {
         var updateMachineCommand = UpdateMachineCommandFromResourceAssembler.toCommandFromResource(machineId, updateMachineResource);
         var updateMachine = machineCommandService.handle(updateMachineCommand);
         if (updateMachine.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
         var machineResource = MachineResourceFromEntityAssembler.toResourceFromEntity(updateMachine.get());
         return ResponseEntity.ok(machineResource);

@@ -6,7 +6,7 @@ public record CreateMaterialResource(
         String receptionDate,
         int amount,
         double totalCost,
-        String status,
-        int projectId
+        String materialStatus,
+        Long projectId
 ) {
 }

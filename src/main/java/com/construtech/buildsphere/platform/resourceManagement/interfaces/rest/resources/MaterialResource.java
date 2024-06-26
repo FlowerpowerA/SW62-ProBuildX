@@ -4,12 +4,12 @@ import java.time.LocalDate;
 
 public record MaterialResource(
         Long id,
-        String machineName,
+        String materialName,
         String description,
-        LocalDate receptionDate,
+        String receptionDate,
         int amount,
         double totalCost,
-        String status,
-        int projectId
+        String materialStatus,
+        Long projectId
 ) {
 }

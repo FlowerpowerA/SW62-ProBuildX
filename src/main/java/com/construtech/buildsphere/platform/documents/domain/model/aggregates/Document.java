@@ -1,7 +1,7 @@
 package com.construtech.buildsphere.platform.documents.domain.model.aggregates;
 
 import com.construtech.buildsphere.platform.documents.domain.model.commands.CreateDocumentCommand;
-import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.Project;
+import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.ProjectD;
 import com.construtech.buildsphere.platform.shared.domain.model.aggregates.AuditableAbstractAggregateRoot;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.Getter;
 public class Document extends AuditableAbstractAggregateRoot<Document> {
 
     @Embedded
-    private Project project;
+    private ProjectD project;
 
     @Column
     private String name;
@@ -24,15 +24,15 @@ public class Document extends AuditableAbstractAggregateRoot<Document> {
 
 
     public Document() {
-        this.project = new Project(0);
+        this.project = new ProjectD(0L);
         this.name = "";
         this.description = "";
         this.fileType = "";
     }
 
-    public Document(int project, String name, String description, String fileType){
+    public Document(Long project, String name, String description, String fileType){
         this();
-        this.project = new Project(project);
+        this.project = new ProjectD(project);
         this.name = name;
         this.description = description;
         this.fileType = fileType;
@@ -42,7 +42,7 @@ public class Document extends AuditableAbstractAggregateRoot<Document> {
         this.name = command.name();
         this.description = command.description();
         this.fileType = command.fileType();
-        this.project = new Project(command.project());
+        this.project = new ProjectD(command.project());
     }
 
     public Document updateInformation(String name, String description, String fileType){
@@ -52,7 +52,7 @@ public class Document extends AuditableAbstractAggregateRoot<Document> {
         return this;
     }
 
-    public int getProjectId(){
+    public Long getProjectId(){
         return project.projectEnt();
     }
 

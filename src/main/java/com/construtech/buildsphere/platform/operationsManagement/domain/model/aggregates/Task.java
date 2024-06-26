@@ -8,9 +8,6 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 
-import java.time.LocalDate;
-import java.util.Date;
-
 @Getter
 @Entity
 public class Task extends AuditableAbstractAggregateRoot<Task> {
@@ -25,36 +22,36 @@ public class Task extends AuditableAbstractAggregateRoot<Task> {
     private String taskDescription;
 
     @Column
-    private LocalDate startDate;
+    private String startDate;
 
     @Column
-    private LocalDate maxEndDate;
+    private String maxEndDate;
 
     @Column
     private Long team;//Foreign key
 
     public Task(){
-        this.project = new Project(0);
+        this.project = new Project(null);
         this.taskName = "";
         this.taskDescription = "";
         this.startDate = null;
         this.maxEndDate = null;
     }
 
-    public Task(int project, String taskName, String taskDescription, String startDate, String maxEndDate){
+    public Task(Long project, String taskName, String taskDescription, String startDate, String maxEndDate){
         this();
         this.project = new Project(project);
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-        this.startDate = LocalDate.parse(startDate);
-        this.maxEndDate = LocalDate.parse(maxEndDate);
+        this.startDate = startDate;
+        this.maxEndDate = maxEndDate;
     }
 
     public Task(CreateTaskCommand command){
         this.taskName = command.taskName();
         this.taskDescription = command.taskDescription();
-        this.startDate = LocalDate.parse(command.startDate());
-        this.maxEndDate = LocalDate.parse(command.maxEndDate());
+        this.startDate = command.startDate();
+        this.maxEndDate = command.maxEndDate();
         this.project = new Project(command.project());
         this.team = command.teamId();
     }
@@ -62,14 +59,21 @@ public class Task extends AuditableAbstractAggregateRoot<Task> {
     public Task updateInformation(String taskName, String taskDescription, String startDate, String maxEndDate, Long team){
         this.taskName = taskName;
         this.taskDescription =taskDescription;
-        this.startDate = LocalDate.parse(startDate);
-        this.maxEndDate = LocalDate.parse(maxEndDate);
+        this.startDate = startDate;
+        this.maxEndDate = maxEndDate;
         this.team = team;
         return this;
     }
 
-    public int getProjectId(){
+    public Long getProjectId(){
         return project.projectEnt();
     }
 
+    public String getStartDate(){
+        return startDate;
+    }
+
+    public String getMaxEndDate(){
+        return maxEndDate;
+    }
 }

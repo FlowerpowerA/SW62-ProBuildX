@@ -3,7 +3,7 @@ package com.construtech.buildsphere.platform.documents.interfaces.rest;
 import com.construtech.buildsphere.platform.documents.domain.model.commands.DeleteDocumentCommand;
 import com.construtech.buildsphere.platform.documents.domain.model.queries.GetAllDocumentsByProjectIdQuery;
 import com.construtech.buildsphere.platform.documents.domain.model.queries.GetDocumentByIdQuery;
-import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.Project;
+import com.construtech.buildsphere.platform.documents.domain.model.valueobjects.ProjectD;
 import com.construtech.buildsphere.platform.documents.domain.services.DocumentCommandService;
 import com.construtech.buildsphere.platform.documents.domain.services.DocumentQueryService;
 import com.construtech.buildsphere.platform.documents.interfaces.rest.resources.CreateDocumentResource;
@@ -62,7 +62,7 @@ public class DocumentsController {
 
     @GetMapping("/projectId/{projectId}")
     public  ResponseEntity<List<DocumentResource>> getAllDocumentsByProjectId(@PathVariable Long projectId){
-        var project = new Project(Math.toIntExact(projectId));
+        var project = new ProjectD(projectId);
         var getAllDocumentsByProjectIdQuery = new GetAllDocumentsByProjectIdQuery(project);
         var documents = documentQueryService.handle(getAllDocumentsByProjectIdQuery);
         var documentResources = documents.stream().map(DocumentResourceFromEntityAssembler::toResourceFromEntity).toList();

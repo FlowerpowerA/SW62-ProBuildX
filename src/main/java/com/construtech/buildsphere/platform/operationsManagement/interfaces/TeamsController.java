@@ -2,15 +2,19 @@ package com.construtech.buildsphere.platform.operationsManagement.interfaces;
 
 
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.commands.DeleteTeamCommand;
+import com.construtech.buildsphere.platform.operationsManagement.domain.model.queries.GetAllTaskByTeamIdQuery;
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.queries.GetAllTeamsByProjectIdQuery;
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.queries.GetTeamByIdQuery;
 import com.construtech.buildsphere.platform.operationsManagement.domain.model.valueobjects.Project;
+import com.construtech.buildsphere.platform.operationsManagement.domain.services.TaskQueryService;
 import com.construtech.buildsphere.platform.operationsManagement.domain.services.TeamCommandService;
 import com.construtech.buildsphere.platform.operationsManagement.domain.services.TeamQueryService;
 import com.construtech.buildsphere.platform.operationsManagement.interfaces.resources.CreateTeamResource;
+import com.construtech.buildsphere.platform.operationsManagement.interfaces.resources.TaskResource;
 import com.construtech.buildsphere.platform.operationsManagement.interfaces.resources.TeamResource;
 import com.construtech.buildsphere.platform.operationsManagement.interfaces.resources.UpdateTeamResource;
 import com.construtech.buildsphere.platform.operationsManagement.interfaces.transform.CreateTeamCommandFromResourceAssembler;
+import com.construtech.buildsphere.platform.operationsManagement.interfaces.transform.TaskResourceFromEntityAssembler;
 import com.construtech.buildsphere.platform.operationsManagement.interfaces.transform.TeamResourceFromEntityAssembler;
 import com.construtech.buildsphere.platform.operationsManagement.interfaces.transform.UpdateTeamCommandFromResourceAssembler;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,10 +32,12 @@ public class TeamsController {
 
     private final TeamCommandService teamCommandService;
     private final TeamQueryService teamQueryService;
+    private final TaskQueryService taskQueryService;
 
-    public TeamsController(TeamCommandService teamCommandService, TeamQueryService teamQueryService){
+    public TeamsController(TeamCommandService teamCommandService, TeamQueryService teamQueryService, TaskQueryService taskQueryService){
         this.teamCommandService = teamCommandService;
         this.teamQueryService = teamQueryService;
+        this.taskQueryService = taskQueryService;
     }
 
     @PostMapping
@@ -61,15 +67,6 @@ public class TeamsController {
         return ResponseEntity.ok(teamResource);
     }
 
-    @GetMapping("/projectId/{projectId}")
-    public ResponseEntity<List<TeamResource>> getAllTeamsByProjectId(@PathVariable Long projectId){
-        var project = new Project(Math.toIntExact(projectId));
-        var getAllTeamsByProjectIdQuery = new GetAllTeamsByProjectIdQuery(project);
-        var teams = teamQueryService.handle(getAllTeamsByProjectIdQuery);
-        var teamResources = teams.stream().map(TeamResourceFromEntityAssembler::toResourceFromEntity).toList();
-        return ResponseEntity.ok(teamResources);
-    }
-
     @PutMapping("/{teamId}")
     public ResponseEntity<TeamResource> updateTeam(@PathVariable Long teamId, @RequestBody UpdateTeamResource updateTeamResource){
         var updateTeamCommand = UpdateTeamCommandFromResourceAssembler.toCommandFromResource(teamId, updateTeamResource);
@@ -79,6 +76,14 @@ public class TeamsController {
         }
         var teamResource = TeamResourceFromEntityAssembler.toResourceFromEntity(updateTeam.get());
         return ResponseEntity.ok(teamResource);
+    }
+
+    @GetMapping("/{teamId}/tasks")
+    public ResponseEntity<List<TaskResource>> getAllTaskByTeamId(@PathVariable Long teamId){
+        var getAllTasksByTeamIdQuery = new GetAllTaskByTeamIdQuery(teamId);
+        var tasks = taskQueryService.handle(getAllTasksByTeamIdQuery);
+        var taskResources = tasks.stream().map(TaskResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(taskResources);
     }
 
     @DeleteMapping("/{teamId}")

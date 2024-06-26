@@ -23,7 +23,7 @@ public class TeamCommandServiceImpl implements TeamCommandService {
     public Long handle(CreateTeamCommand command){
         var projectId = new Project(command.project());
         if (teamRepository.existsByTeamNameAndProject(command.teamName(), projectId)){
-            throw new IllegalArgumentException("Team with the same name already exists in the project");
+            throw new IllegalArgumentException("Team with the same name already exists in the projectRM");
         }
         var team = new Team(command);
         try {

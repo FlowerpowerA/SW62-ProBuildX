@@ -61,14 +61,6 @@ public class WorkersController {
         return ResponseEntity.ok(workerResource);
     }
 
-    @GetMapping("/projectId/{projectId}")
-    public  ResponseEntity<List<WorkerResource>> getAllWorkersByProjectId(@PathVariable Long projectId){
-        var project = new Project(Math.toIntExact(projectId));
-        var getAllWorkersByProjectIdQuery = new GetAllWorkersByProjectIdQuery(project);
-        var workers = workerQueryService.handle(getAllWorkersByProjectIdQuery);
-        var workerResources = workers.stream().map(WorkerResourceFromEntityAssembler::toResourceFromEntity).toList();
-        return ResponseEntity.ok(workerResources);
-    }
 
     @PutMapping("/{workerId}")
     public ResponseEntity<WorkerResource> updateWorker(@PathVariable Long workerId, @RequestBody UpdateWorkerResource updateWorkerResource){

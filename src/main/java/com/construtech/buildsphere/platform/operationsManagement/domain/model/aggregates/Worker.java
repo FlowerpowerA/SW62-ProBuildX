@@ -27,13 +27,13 @@ public class Worker extends AuditableAbstractAggregateRoot<Worker> {
 
 
     public Worker() {
-        this.project = new Project(0);
+        this.project = new Project(null);
         this.fullName = "";
         this.role = "";
         this.hoursWorked = 0;
     }
 
-    public Worker(int project, String fullName, String role, int hoursWorked, Long team){
+    public Worker(Long project, String fullName, String role, int hoursWorked, Long team){
         this();
         this.project = new Project(project);
         this.fullName = fullName;
@@ -58,7 +58,7 @@ public class Worker extends AuditableAbstractAggregateRoot<Worker> {
         return this;
     }
 
-    public int getProjectId(){
+    public Long getProjectId(){
         return project.projectEnt();
     }
 

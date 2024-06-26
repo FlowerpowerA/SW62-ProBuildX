@@ -6,6 +6,6 @@ public record WorkerResource(
         String role,
         int hoursWorked,
         Long teamId,
-        int projectId
+        Long projectId
 ) {
 }

@@ -12,14 +12,18 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+    
 public class DocumentCommandServiceImpl implements DocumentCommandService {
+    
     private final DocumentRepository documentRepository;
 
     public DocumentCommandServiceImpl(DocumentRepository documentRepository){
+        
         this.documentRepository = documentRepository;
     }
 
     @Override
+    
     public Long handle(CreateDocumentCommand command){
         var projectId = new ProjectD(command.project());
         if (documentRepository.existsByNameAndProject(command.name(), projectId)){
